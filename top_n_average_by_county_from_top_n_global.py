@@ -110,7 +110,8 @@ def handle_arguments():
         type=int,
         help="If this flag is passed with a number > 0, the script will poll the ScoreSaber API to get the number of pages \
             specified before calculation (MAY BE LONG) \
-            (by default, the flag is set to 0 which means that it won't poll the API and try to use the default stored file)",
+            (by default, the flag is set to 0 which means that it won't poll the API and try to use the default stored file. \
+            If there is no stored file, it will poll the first 200 pages)",
         default=0,
     )
     parser.add_argument(
@@ -119,8 +120,8 @@ def handle_arguments():
         type=str,
         help="Specifies the file countaining already retrieved datas from the API (polling the API being long, we avoid \
                 doing it every time). \
-                (by default, the stored file is '/tmp/ssaber_pages_data.json')",
-        default="/tmp/ssaber_pages_data.json",
+                (by default, the stored file is 'ssaber_pages_data.json')",
+        default="ssaber_pages_data.json",
     )
     args = parser.parse_args()
     
@@ -134,18 +135,16 @@ def main():
         if args.update:
             Path(args.filestorage).touch()
         else:
-            print(
-                "The file {} is not readable.\nDid you already launched the script with -u X (X being the number of pages) ?".format(
-                    args.filestorage
-                )
-            )
-            exit()
+            args.update = 200
+            Path(args.filestorage).touch()
 
     top_n_players = args.topN
     nb_players_to_check = args.topM
     if args.update:
         if args.update > 200:
             #TODO Handle the case where there is too much pages at once
+            print("The API doesn't allow us to scrap that much pages at once. Falling back to 200")
+            print("(A future patch will handle this case to scrap the required number by chunks)")
             args.update = 200
         urls = [url + str(page) for page in range(1,args.update)]
         parallel_url_scrapping(urls, args.filestorage)
