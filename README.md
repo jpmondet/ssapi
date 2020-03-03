@@ -1,5 +1,14 @@
 # Playing with the ssapi
 
+* [Averages by countries of Top N (for countries appearing in the global top M)](#averages-by-countries-of-top-n-for-countries-appearing-in-the-global-top-m)
+   * [Requirements](#requirements)
+   * [Simple usage](#simple-usage)
+   * [Lil' more advanced usage](#lil-more-advanced-usage)
+      * [Updating and/or getting more datas](#updating-andor-getting-more-datas)
+      * [Modifying the default top15/top100](#modifying-the-default-top15top100)
+      * [More flags](#more-flags)
+
+
 ## Averages by countries of Top N (for countries appearing in the global top M)
 
 ### Requirements
