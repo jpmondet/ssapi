@@ -16,6 +16,7 @@ test_script:
 after_test:
   - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
   - "build.cmd %PYTHON%\\Scripts\\pyinstaller --onefile topN/top_n_average_by_county_from_top_n_global.py --name topN"
+  - "dist/topN.exe"
 
 artifacts:
   - path: dist\*
@@ -23,4 +24,16 @@ artifacts:
 #on_success:
 #  You can use this step to upload your artifacts to a public website.
 #  See Appveyor's documentation for more details. Or you can simply
-#  access your wheels from the Appveyor "artifacts" tab for your build.
+#  access your wheels from the Appveyor "artifacts" tab for your build.o
+#deploy:
+#  release: myproduct-v$(appveyor_build_version)
+#  description: 'Release description'
+#  provider: GitHub
+#  auth_token:
+#    secure: <your encrypted token> # your encrypted token from GitHub
+#  artifact: /.*\.nupkg/            # upload all NuGet packages to release assets
+#  draft: false
+#  prerelease: false
+#  on:
+#    branch: master                 # release from master branch only
+#    APPVEYOR_REPO_TAG: true        # deploy on tag push only
