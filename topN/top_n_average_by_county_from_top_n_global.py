@@ -3,7 +3,6 @@
 from os import access, R_OK
 from pathlib import Path
 from argparse import ArgumentParser
-import requests
 import json
 import pprint
 
@@ -15,24 +14,6 @@ nb_players_country = {}
 tot_scores_country = {}
 moy_scores_country = {}
 infos_pages = {}
-
-
-def get_pages_infos(nb_pages):
-
-    for page in range(1,nb_pages):
-        req = requests.get(url + str(page))
-        res = json.loads(req.text)
-        infos_pages[page] = res
-        for player in res:
-            try:
-                nb_players_country[player["country"]] += 1
-            except KeyError:
-                nb_players_country[player["country"]] = 1
-    
-    with open('nb_players_country.json', 'w') as fnb:
-        json.dump(nb_players_country, fnb, indent=2)
-    with open('infos_per_pages.json', 'w') as finfos:
-        json.dump(infos_pages, finfos, indent=2)
 
 
 def get_countries_from_top_n(nb_players, sorted_infos_pages):
