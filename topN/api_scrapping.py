@@ -1,11 +1,11 @@
 #! /usr/bin/env python3
 
 import os
+import encodings.idna
 import asyncio
 import aiohttp
 import time
 import json
-import pprint
 
 url = "https://new.scoresaber.com/api/players/"
 
