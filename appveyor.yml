@@ -5,16 +5,16 @@ environment:
     - PYTHON: "C:\\Python36-x64"
 
 install:
-  - "%PYTHON%\\python.exe -m pip install setuptools wheel"
+  - "%PYTHON%\\python.exe -m pip install setuptools wheel pyinstaller"
 
 build: off
 
 test_script:
-   - "%PYTHON%\\python.exe --version"
-#  - "build.cmd %PYTHON%\\python.exe setup.py test"
+  - "build.cmd %PYTHON%\\python.exe setup.py test"
 
 after_test:
   - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
+  - "build.cmd %PYTHON%\\Scripts\\pyinstaller --onefile topN/top_n_average_by_county_from_top_n_global.py --name topN"
 
 artifacts:
   - path: dist\*
