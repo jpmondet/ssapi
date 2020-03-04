@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import setuptools
 from distutils.core import setup
 
 setup(name='topN',
@@ -9,4 +10,5 @@ setup(name='topN',
       author_email='github.com/jpmondet',
       url='github.com/jpmondet/ssapi',
       packages=['topN'],
+      setup_requires=['wheel'],
      )
