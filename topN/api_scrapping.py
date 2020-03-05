@@ -9,6 +9,7 @@ import json
 
 url = "https://new.scoresaber.com/api/players/"
 
+lock = asyncio.Lock()
 infos = {}
 
 async def get(url):
@@ -21,8 +22,9 @@ async def get(url):
 
 async def scrapping_urls(urls, file_to_store):
     ret_list = await asyncio.gather(*[get(url) for url in urls])
-    for count, ret in enumerate(ret_list):
-        infos[count] = ret
+    async with lock:
+        for count, ret in enumerate(ret_list):
+            infos[count] = ret
     with open(file_to_store, "w") as fpage:
         json.dump(infos, fpage, indent=2)
 
