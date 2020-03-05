@@ -1,10 +1,9 @@
 #! /usr/bin/env python3
 
-from os import access, R_OK
+from os import access, R_OK, system, name
 from pathlib import Path
 from argparse import ArgumentParser
 import json
-import pprint
 
 from api_scrapping import parallel_url_scrapping
 
@@ -91,9 +90,17 @@ def handle_arguments():
         type=int,
         help="If this flag is passed with a number > 0, the script will poll the ScoreSaber API to get the number of pages \
             specified before calculation (MAY BE LONG) \
-            (by default, the flag is set to 0 which means that it won't poll the API and try to use the default stored file. \
-            If there is no stored file, it will poll the first 200 pages)",
-        default=0,
+            (by default, the flag is set to 100. If you want to prevent the script to poll the API and \
+            use a stored file, pass it to 0",
+        default=100,
+    )
+    parser.add_argument(
+        "-s",
+        "--skip",
+        action="store_true",
+        help="Skips some windows console specifics (clears & pause at the end). \
+            THIS OPTION IS PRIMARLY USED FOR THE BUILDING PROCESS. \
+            This should not be very useful for a end user.",
     )
     parser.add_argument(
         "-f",
@@ -111,12 +118,19 @@ def handle_arguments():
 def main():
 
     args = handle_arguments()
+    
+    if not args.skip:
+        if name == "nt":
+            system("mode con: lines=800")
+        system("cls" if name == "nt" else "clear")
+        print("Please wait a lil' while we get some fresh data from scoresaber API...")
 
+    
     if not access(args.filestorage, R_OK):
         if args.update:
             Path(args.filestorage).touch()
         else:
-            args.update = 200
+            args.update = 100
             Path(args.filestorage).touch()
 
     top_n_players = args.topN
@@ -139,10 +153,13 @@ def main():
 
     sorted_moy_scores_country = moy_top_n_players_from_countries_in_top_n(top_n_players, nb_players_to_check, sorted_pages)
     print("PP average of the top{} players from all the countries appearing in the top{}".format(top_n_players, nb_players_to_check))
+    if not args.skip:
+        system("cls" if name == "nt" else "clear")
     for moy in sorted_moy_scores_country:
         print("{}   {:.2f}".format(moy[0], moy[1]))
 
-
+    if not args.skip:
+        input("\n\nPress ENTER key to quit...")
 
 
    
