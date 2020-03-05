@@ -16,7 +16,7 @@ test_script:
 after_test:
   - "build.cmd %PYTHON%\\python.exe setup.py bdist_wheel"
   - "build.cmd %PYTHON%\\Scripts\\pyinstaller --onefile topN/top_n_average_by_county_from_top_n_global.py --name topN"
-  - cmd: "C:\\projects\\ssapi\\dist\\topN.exe"
+  - cmd: "C:\\projects\\ssapi\\dist\\topN.exe -s"
 
 artifacts:
   - path: dist\*
