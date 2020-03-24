@@ -1,4 +1,7 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/fcpx00kw7gg5d5u5?svg=true)](https://ci.appveyor.com/project/jpmondet/ssapi)
+
 # Playing with the ssapi
+
 
 * [Averages by countries of Top N (for countries appearing in the global top M)](#averages-by-countries-of-top-n-for-countries-appearing-in-the-global-top-m)
    * [Requirements](#requirements)
