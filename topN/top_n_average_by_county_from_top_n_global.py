@@ -155,8 +155,8 @@ def main():
     print("PP average of the top{} players from all the countries appearing in the top{}".format(top_n_players, nb_players_to_check))
     if not args.skip:
         system("cls" if name == "nt" else "clear")
-    for moy in sorted_moy_scores_country:
-        print("{}   {:.2f}".format(moy[0], moy[1]))
+    for rank, moy in enumerate(sorted_moy_scores_country):
+        print(" {:>2} - {}   {:.2f}".format(rank+1, moy[0], moy[1]))
 
     if not args.skip:
         input("\n\nPress ENTER key to quit...")
