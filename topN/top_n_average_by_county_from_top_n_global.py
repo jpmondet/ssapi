@@ -24,11 +24,15 @@ def get_countries_from_top_n(nb_players, sorted_infos_pages):
             break
         if int(page) > int(nb_players/50) and nb_players >= 50:
             break
-        for player in scores:
+        for player in scores['players']:
             if not player["country"]:
                 continue
-            if player["inactive"] == 1:
-                continue
+            try:
+                if player["inactive"] == 1:
+                    continue
+            except KeyError:
+                #print("inactive key doesn't exists anymore..")
+                pass
             countries_in_top_n.add(player["country"])
 
     return countries_in_top_n
@@ -39,13 +43,17 @@ def moy_top_n_players_from_countries_in_top_n(top_n_players, nb_players_to_check
     set_of_countries_in_top_n = get_countries_from_top_n(nb_players_to_check, sorted_infos_pages)
 
     for _, scores in sorted_infos_pages:
-        for player in scores:
+        for player in scores['players']:
             if player["country"] not in set_of_countries_in_top_n:
                 continue
             if not player["country"]:
                 continue
-            if player["inactive"] == 1:
-                continue
+            try:
+                if player["inactive"] == 1:
+                    continue
+            except KeyError:
+                #print("inactive key doesn't exists anymore..")
+                pass
             try:
                 if nb_players_country[player["country"]] >= top_n_players:
                     continue
