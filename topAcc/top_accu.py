@@ -48,14 +48,15 @@ accu_rank = sorted(
 
 #print("#"*15, "Top by Accuracy", "#"*15)
 if disc:
-    output = "```"
+    #output = "```"
+    output = ""
     for rank, stats in enumerate(accu_rank):
         if rank < 15:
             name_p = stats[0]
             if len(stats[0]) > 22:
                 name_p = stats[0][:22]
             output += "{:>2} - {:>23} (ranked_accu: {:.2f}  ranked_count: {})\n".format(rank+1, name_p, stats[1][1], stats[1][0])
-    output += "```"
+    #output += "```"
     print(output)
 else:
     for rank, stats in enumerate(accu_rank):
