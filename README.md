@@ -1,4 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/fcpx00kw7gg5d5u5?svg=true)](https://ci.appveyor.com/project/jpmondet/ssapi)
+[![Build status](https://ci.appveyor.com/api/projects/status/fcpx00kw7gg5d5u5/branch/master?svg=true)](https://ci.appveyor.com/project/jpmondet/ssapi/branch/master)
+
 
 # Playing with the ssapi
 
