@@ -60,8 +60,9 @@ def check_scores(feed_infos, pinfos):
                 if SNIPZ[infos['playerId']][infos['leaderboardId']] == foreign_score:
                     continue
             except KeyError:
-                if not SNIPZ[infos['playerId']]:
-                    del(SNIPZ[infos['playerId']])
+                if SNIPZ.get(infos['playerId']):
+                    if not SNIPZ[infos['playerId']]:
+                        del(SNIPZ[infos['playerId']])
             pscore = int(pinfos[infos['leaderboardId']]['score'])
             if foreign_score > pscore:
                 output = f"{infos['name']} | {infos['leaderboardId']} ({infos['info']['title']}) | {foreign_score} > {pscore}"
