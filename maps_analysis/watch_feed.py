@@ -56,11 +56,11 @@ def check_scores(feed_infos, pinfos):
             if infos['playerId'] == "76561197964179685":
                 continue
             foreign_score = int(infos['score'].replace(',', ""))
-            try:
-                if SNIPZ[infos['playerId']][infos['leaderboardId']] == foreign_score:
-                    continue
-            except KeyError:
-                if SNIPZ.get(infos['playerId']):
+            if SNIPZ.get(infos['playerId']):
+                try:
+                    if SNIPZ[infos['playerId']][infos['leaderboardId']] == foreign_score:
+                        continue
+                except KeyError:
                     if not SNIPZ[infos['playerId']]:
                         del(SNIPZ[infos['playerId']])
             pscore = int(pinfos[infos['leaderboardId']]['score'])
@@ -86,6 +86,7 @@ def main():
         global SNIPZ
         with open('snipez.json') as jsnip:
             SNIPZ = load(jsnip)
+            SNIPZ = defaultdict(dict, SNIPZ)
 
     update = 1
 
