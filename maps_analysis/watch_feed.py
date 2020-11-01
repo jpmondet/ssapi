@@ -53,7 +53,7 @@ def check_scores(feed_infos, pinfos):
         if pinfos.get(infos['leaderboardId']):
             if infos['flag'] != "fr.png":
                 continue
-            if infos['playerId'] == "76561197964179685":
+            if infos['playerId'] == 76561197964179685 :
                 continue
             foreign_score = int(infos['score'].replace(',', ""))
             if SNIPZ.get(infos['playerId']):
@@ -68,8 +68,8 @@ def check_scores(feed_infos, pinfos):
                 output = f"{infos['name']} | {infos['leaderboardId']} ({infos['info']['title']}) | {foreign_score} > {pscore}"
                 print(output)
                 SNIPZ[infos['playerId']][infos['leaderboardId']] = foreign_score
-                with open('snipz', 'w+') as jsnip:
-                    jsnip.write(output)
+                with open('snipz', 'a+') as jsnip:
+                    jsnip.write(output + '\n')
                 with open('snipez.json', 'w') as jsnip:
                     dump(SNIPZ, jsnip)
 
