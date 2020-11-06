@@ -2,11 +2,13 @@
 
 from sys import exit
 from os import access, R_OK
+from signal import signal, SIGUSR1, Signals
 from time import sleep
 from argparse import ArgumentParser, Namespace
 from json import load, dump
 from collections import defaultdict
 from typing import Sequence, Dict, Union, Any, DefaultDict, cast
+from types import FrameType
 import requests
 
 # Types definitions
@@ -91,16 +93,23 @@ def check_scores(feed_infos: Sequence[FeedInfosType], pinfos: IndexedPinfosType)
                 with open('snipez.json', 'w') as jsnip:
                     dump(SNIPZ, jsnip)
 
-    
-def main() -> None:
-    #TODO : enforce type & PYRE checks
-    #https://docs.python.org/3/library/typing.html
-    #https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html
+def flush_snip(signum: Signals, stack: FrameType) -> None:
+    print('Signal received, we flush snipz')
+    global SNIPZ
+    print(SNIPZ)
+    SNIPZ = defaultdict(dict)
+    print(SNIPZ)
 
-    args = handle_arguments()
+
+def main() -> None:
+
+    # Register signal
+    signal(SIGUSR1, flush_snip)
+
+    args: Namespace = handle_arguments()
 
     #TODO: Allow to watch for multiple players
-    pinfos = reindex_pinfos_for_fast_processing(args.pinfos)
+    pinfos: IndexedPinfosType = reindex_pinfos_for_fast_processing(args.pinfos)
  
     if access('snipez.json', R_OK):
         global SNIPZ
