@@ -124,8 +124,8 @@ def main() -> None:
             print("It's been 24h already :o Updating pinfos...")
             pinfos = reindex_pinfos_for_fast_processing(args.pinfos)
 
-        req = requests.get(args.url)
         try:
+            req = requests.get(args.url)
             reqjson = req.json()
             if not isinstance(reqjson, list):
                 print("Not a list, ss rate-limited us... missed this loop and waiting 10 secs :-(")
