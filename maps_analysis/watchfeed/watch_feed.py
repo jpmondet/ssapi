@@ -81,9 +81,10 @@ def check_scores(feed_infos: Sequence[FeedInfosType], pinfos: IndexedPinfosType)
                         del(SNIPZ[playerid])
             pscore: int = int(pinfos[leaderboardid]['score'])
             if foreign_score > pscore:
-#watch_feed.py:78: error: Value of type "Union[str, int, float, Dict[Any, Any]]" is not indexable
-#watch_feed.py:78: error: Invalid index type "str" for "Union[str, int, float, Dict[Any, Any]]"; expected type "Union[int, slice]"
                 map_metadata: JsonType = cast(JsonType,infos['info'])
+                if map_metadata["ranked"] != "Ranked":
+                    # Not interested in unranked for now
+                    continue
                 title: str = map_metadata['title']
                 output = f"{infos['name']} | {leaderboardid} ({title}) | {foreign_score} > {pscore}"
                 print(output)
