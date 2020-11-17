@@ -29,6 +29,7 @@ def main():
         maps_playah = json.load(fmaps)
 
     scores = defaultdict(int)
+    rankz = defaultdict(int)
     maps_scores = defaultdict(list)
 
     sum_average = 0.0
@@ -49,6 +50,7 @@ def main():
             #scores[89] +=1
             #continue
         scores[int(percent)] += 1
+        rankz[mapp['rank']] += 1
 
 
     nb_maps =  len(maps_playah)
@@ -67,6 +69,10 @@ def main():
     for scorz in sorted(maps_scores):
         for mapz in maps_scores[scorz]:
             print(f"{scorz:.2f} : {mapz['songName']:<50} ({mapz['difficultyRaw']}) set on {mapz['timeSet']}")
+
+    rankz_sorted = sorted(rankz, reverse=True)
+    for rank in rankz_sorted:
+        print(f"    {rank} = {rankz[rank]}")
 
 if __name__ == "__main__":
     main()
