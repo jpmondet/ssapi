@@ -25,7 +25,7 @@ def main():
     args = handle_arguments()
 
     maps_playah = []
-    with open(f'all_maps_players_{args.player}.json', 'r') as fmaps:
+    with open(f'/root/ssapi/maps_analysis/all_maps_players_{args.player}.json', 'r') as fmaps:
         maps_playah = json.load(fmaps)
 
     scores = defaultdict(int)
@@ -47,8 +47,8 @@ def main():
             maps_scores[percent].append(mapp)
             #print(mapp['songName'])
             #percent = 90
-            #scores[89] +=1
-            #continue
+            scores[89] +=1
+            continue
         scores[int(percent)] += 1
         rankz[mapp['rank']] += 1
 
@@ -57,22 +57,54 @@ def main():
     scores_sorted = sorted(scores, reverse=True)
     print(f"\nTotal nb of maps = {nb_maps}")
     print(f"Total nb of ranked maps = {ranked_maps}")
-    print(f"Average on ranked = {sum_average / ranked_maps}")
-    print("Details:")
+    print(f"Average Acc on ranked = {sum_average / ranked_maps}")
+    print("Details on ranked:")
     for scorz in scores_sorted:
-        #if scorz == 89:
-        #    print(f"    Under 90 :cry: = {scores[scorz]}")
-        #else:
+        if scorz < 90:
+            print(f"    Under 90 = {scores[scorz]}")
+            continue
         print(f"    {scorz}+ = {scores[scorz]}")
 
     
+    nb_worst_maps = 5
+    print(f"\n{str(nb_worst_maps)} worst runs :")
+    index = 1
     for scorz in sorted(maps_scores):
         for mapz in maps_scores[scorz]:
-            print(f"{scorz:.2f} : {mapz['songName']:<50} ({mapz['difficultyRaw']}) set on {mapz['timeSet']}")
+            if index >= (ranked_maps - nb_worst_maps);
+                #print(f"{scorz:.2f} : {mapz['songName']:<50} ({mapz['difficultyRaw']}) set on {mapz['timeSet']}")
+                print(f"{scorz:.2f} : {mapz['songName']:<20} (set on {mapz['timeSet']})")
+            index += 1
 
+    print("\nNumber of time in 'Tops' on ranked maps:")
     rankz_sorted = sorted(rankz, reverse=True)
+    top3z = 0
+    top5z = 0
+    top10z = 0
+    top25z = 0
+    top50z = 0
+    top100z = 0
     for rank in rankz_sorted:
-        print(f"    {rank} = {rankz[rank]}")
+        #print(f"    {rank} = {rankz[rank]}")
+        if rank <= 100:
+            top100z += rankz[rank]
+            if rank <= 50:
+                top50z += rankz[rank]
+                if rank <= 25:
+                    top25z += rankz[rank]
+                    if rank <= 10:
+                        top10z += rankz[rank]
+                        if rank <= 5:
+                            top5z += rankz[rank]
+                            if rank <= 3:
+                                top3z += rankz[rank]
+    print(f"top1:   {rankz[1]} times, \n\
+top3:   {top3z} times, \n\
+top5:   {top5z} times, \n\
+top10:  {top10z} times, \n\
+top25:  {top25z} times, \n\
+top50:  {top50z} times, \n\
+top100: {top100z} times")
 
 if __name__ == "__main__":
     main()
