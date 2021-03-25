@@ -66,7 +66,7 @@ def main():
         print(f"    {scorz}+ = {scores[scorz]}")
 
     
-    nb_worst_maps = 5
+    nb_worst_maps = 20
     print(f"\n{str(nb_worst_maps)} worst runs :")
     index = 1
     for scorz in sorted(maps_scores):
